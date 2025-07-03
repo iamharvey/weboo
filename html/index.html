@@ -1,0 +1,185 @@
+
+<!doctype html>
+<html lang="en-US" prefix="og: https://ogp.me/ns#">
+    <head>
+        <meta charSet="utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <meta name="theme-color" content="#ffffff"/>
+        <style>
+            html {
+                font-family: sans-serif;
+            }
+
+            .form-group {
+                margin-bottom: 20px; /* 20px 行间距 */
+            }
+            label {
+                display: block;
+                margin-bottom: 4px;
+                text-align: left;
+                font-weight: bold;
+            }
+            input[type="text"] {
+                width: 100%;
+                max-width: 100ch; /* 100字符宽度 */
+                box-sizing: border-box;
+                font-family: monospace;
+                padding: 6px 8px;
+                font-size: 14px;
+            }
+            .button-container {
+                text-align: right;
+            }
+            button {
+                padding: 6px 16px;
+                font-size: 14px;
+                cursor: pointer;
+            }
+
+            /* Style the tab */
+            .tab-container {
+                width: 80%;
+                margin: 40px auto;
+                font-family: Arial, sans-serif;
+            }
+
+            /* 标签按钮组 */
+            .tab-buttons {
+                display: flex;
+                border-bottom: 2px solid #ccc;
+            }
+
+            .tab-buttons button {
+                flex: 1;
+                padding: 12px 0;
+                cursor: pointer;
+                background: #f9f9f9;
+                border: none;
+                border-bottom: 2px solid transparent;
+                font-size: 16px;
+                transition: border-color 0.3s, background-color 0.3s;
+            }
+
+            .tab-buttons button:hover {
+                background-color: #eaeaea;
+            }
+
+            /* 激活标签样式 */
+            .tab-buttons button.active {
+                border-bottom-color: #007bff;
+                background-color: #fff;
+                font-weight: bold;
+            }
+
+            /* 标签内容 */
+            .tab-content {
+                border: 1px solid #ccc;
+                border-top: none;
+                padding: 20px;
+                background-color: #fff;
+            }
+
+            /* 默认隐藏内容 */
+            .tab-panel {
+                display: none;
+            }
+
+            /* 显示激活内容 */
+            .tab-panel.active {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="tab1">上传输入数据</button>
+                <button class="tab-btn" data-tab="tab2">设置</button>
+            </div>
+            <div class="tab-content">
+                <div id="tab1" class="tab-panel active">
+                    <h2>输入数据</h2>
+                    <p>上传输入数据文件</p>
+                    <form method="post" enctype="multipart/form-data">
+                        <div>
+                            <label for="input_uploads">Choose input file to upload (csv, xls, xlsx)</label>
+                            <input
+                                    type="file"
+                                    id="image_uploads"
+                                    name="image_uploads"
+                                    accept=".csv, .xls, .xlsx"
+                                    multiple />
+                        </div>
+                        <div class="preview">
+                            <p>No files currently selected for upload</p>
+                        </div>
+                        <div>
+                            <button id="save1">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="tab2" class="tab-panel">
+                    <h2>设置</h2>
+                    <p>设置执行命令及输出文件名</p>
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="command">执行命令</label>
+                            <input type="text" id="command" name="command" size="100" value="python /Users/noname/execute_me.py" />
+                        </div>
+                        <div class="form-group">
+                            <label for="output">输出文件名</label>
+                            <input type="text" id="output" name="output" size="100" value="output.csv" />
+                        </div>
+                        <div>
+                            <button id="save2">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="result" style="width: 80%; align-content: center;">
+            <p>✅ 实验1，输入:input1.csv, <a href="output.csv>">ouput.csv</a>___耗时：30mins</p>
+            <p>✅️ 实验2， 输入:input1.csv, <a href="output.csv>">ouput.csv</a>___耗时：50mins</p>
+            <p>✅️ 实验3， 输入:input1.csv, <a href="output.csv>">ouput.csv</a>___耗时：35mins</p>
+            <p>❌ 实验4， 输入:input1.csv, <a href="output.csv>"></a>耗时：10mins</p>
+            <p>.. 实验5， 输入:input1.csv<marquee width="150">🚗...</marquee></p>
+        </div>
+        <script>
+
+            document.getElementById('save1').addEventListener('click', function(event){
+                event.preventDefault();
+                // Add additional logic here
+                const target = document.getElementById("result");
+                target.innerHTML = "save 1 clicked";
+            });
+
+            document.getElementById('save2').addEventListener('click', function(event){
+                event.preventDefault();
+                // Add additional logic here
+                const target = document.getElementById("result");
+                target.innerHTML = "save 2 clicked";
+            });
+
+            // 获取所有标签按钮和内容面板
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const target = button.getAttribute('data-tab');
+
+                    // 移除所有按钮激活状态
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    // 隐藏所有内容面板
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+
+                    // 激活当前按钮和对应内容
+                    button.classList.add('active');
+                    document.getElementById(target).classList.add('active');
+
+                    e.preventDefault();
+                });
+            });
+        </script>
+    </body>
+</html>
